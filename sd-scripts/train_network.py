@@ -135,6 +135,10 @@ class NetworkTrainer:
         train_util.sample_images(accelerator, args, epoch, global_step, device, vae, tokenizer, text_encoder, unet)
 
     def train(self, args):
+        # This is a fix, it should help with NaN errors on LoRA training
+        # https://github.com/bmaltais/kohya_ss/discussions/1947
+        torch.backends.cudnn.benchmark = True
+        
         session_id = random.randint(0, 2**32)
         training_started_at = time.time()
         train_util.verify_training_args(args)
