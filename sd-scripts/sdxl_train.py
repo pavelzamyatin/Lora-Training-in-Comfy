@@ -97,6 +97,10 @@ def append_block_lr_to_logs(block_lrs, logs, lr_scheduler, optimizer_type):
 
 
 def train(args):
+    # This is a fix, it should help with NaN errors on LoRA training
+    # https://github.com/bmaltais/kohya_ss/discussions/1947
+    torch.backends.cudnn.benchmark = True
+    
     train_util.verify_training_args(args)
     train_util.prepare_dataset_args(args, True)
     sdxl_train_util.verify_sdxl_training_args(args)
