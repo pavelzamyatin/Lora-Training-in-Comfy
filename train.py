@@ -334,6 +334,9 @@ class LoraTraininginComfyAdvanced:
 
         #generates a random seed
         theseed = random.randint(0, 2^32-1)
+
+        # https://github.com/bmaltais/kohya_ss/issues/1908
+        launch_args.append("--no-half-vae")
         
         if multi_gpu:
             launch_args.append("--multi_gpu")
